@@ -9,14 +9,14 @@ struct Process {
     int remaining;
 };
 
-// Function for sorting processes by arrival time
+
 int ArrivalTimeComparator(const void* a, const void* b) {
     return ((struct Process*)a)->arrival_time - ((struct Process*)b)->arrival_time;
 }
 
-// Function to perform Round Robin scheduling for a given queue
+
 void roundRobinScheduling(struct Process* processQueue, int num_processes, int quantum_time, int* total_query_time) {
-    int time = 0; // Track the current time
+    int time = 0; 
 
     while (1) {
         int allProcessesCompleted = 1;
@@ -45,7 +45,7 @@ void roundRobinScheduling(struct Process* processQueue, int num_processes, int q
 
 int main() {
     int select_queue, num_processes;
-    int total_query_time = 0; // Variable to store total query time
+    int total_query_time = 0;
 
     printf("Please choose a queue to post your query:\n");
     printf("1. FACULTY queue\n");
@@ -67,20 +67,20 @@ int main() {
         scanf("%d", &processQueue[i].arrival_time);
         printf("Burst Time: ");
         scanf("%d", &processQueue[i].burst_time);
-        processQueue[i].remaining = processQueue[i].burst_time; // Initialize remaining time
+        processQueue[i].remaining = processQueue[i].burst_time; 
     }
 
-    // Sort processes by arrival time using the ArrivalTimeComparator function
+    
     qsort(processQueue, num_processes, sizeof(struct Process), ArrivalTimeComparator);
 
     int quantum_time;
     printf("Enter the quantum time: ");
     scanf("%d", &quantum_time);
 
-    // Perform Round Robin scheduling for the chosen queue
+    
     roundRobinScheduling(processQueue, num_processes, quantum_time, &total_query_time);
 
-    // Print the results
+ 
     printf("\n\t\t\t********************************************\n");
     printf("\t\t\t*****   ROUND ROBIN ALGORITHM OUTPUT   *****\n");
     printf("\t\t\t********************************************\n");
@@ -89,7 +89,7 @@ int main() {
     for (int i = 0; i < num_processes; i++) {
         int waiting_time = processQueue[i].completion_time - processQueue[i].burst_time - processQueue[i].arrival_time;
         if (waiting_time < 0) {
-            waiting_time = 0; // Ensure waiting time is non-negative
+            waiting_time = 0; 
         }
 
         int turnaround_time = processQueue[i].completion_time - processQueue[i].arrival_time;
@@ -98,15 +98,14 @@ int main() {
                processQueue[i].completion_time, waiting_time, turnaround_time);
     }
 
-    // Calculate and print the average query time
+    
     double average_query_time = (double)total_query_time / num_processes;
     printf("\nAverage Query Time: %lf\n", average_query_time);
 
-    // Print the total query time
+    
     printf("Total Query Time: %d\n", total_query_time);
 
-    free(processQueue); // Free the dynamically allocated memory
-
+    free(processQueue); 
     return 0;
 }
 
